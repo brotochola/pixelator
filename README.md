@@ -1,5 +1,7 @@
 # 🎨 Pixelator - Advanced Image Pixelation Tool
 
+[Pixelator Demo, check it here!](https://brotochola.github.io/pixelator)
+
 A powerful web-based image transformation tool that converts regular photographs into stunning pixel art with advanced color manipulation capabilities.
 
 ## 🌟 Features
