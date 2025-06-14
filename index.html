@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelador - Image Effect Tool</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Pixelador</h1>
+            <p>Transform your images with pixelation, color effects, and artistic filters</p>
+        </div>
+
+        <div class="main-content">
+            <div class="controls-panel">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <h2 style="color: #495057; margin: 0; font-size: 1.4rem;">🎛️ Controls</h2>
+                    <button class="controls-close"
+                        style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; padding: 5px;">✕</button>
+                </div>
+                <div class="file-input-container">
+                    <label for="imageLoader" class="file-input-label">
+                        📁 Choose Image File
+                    </label>
+                    <input type="file" id="imageLoader" accept="image/*">
+                </div>
+
+                <div class="control-group">
+                    <h3>🔧 System Controls</h3>
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="bypass">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Bypass Effects</span>
+                        </div>
+                    </div>
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="canvas1Antialias">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Canvas 1 Antialias</span>
+                        </div>
+                        <div class="toggle-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="canvas2Antialias" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Canvas 2 Antialias</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎯 Image Effects</h3>
+                    <div class="slider-container">
+                        <label for="pixelationRange">
+                            <span>Pixelation Level</span>
+                            <span class="slider-value" id="pixelationValue">4</span>
+                        </label>
+                        <input type="range" id="pixelationRange" class="range-input" min="1" max="16" value="4">
+                    </div>
+                    <div class="slider-container">
+                        <label for="smoothRange">
+                            <span>Surface Smoothing</span>
+                            <span class="slider-value" id="smoothValue">0</span>
+                        </label>
+                        <input type="range" id="smoothRange" class="range-input" min="0" max="20" value="0" step="0.5">
+                    </div>
+                    <div class="slider-container">
+                        <label for="darkenRange">
+                            <span>Border Darkening (%)</span>
+                            <span class="slider-value" id="darkenValue">20</span>
+                        </label>
+                        <input type="range" id="darkenRange" class="range-input" min="0" max="100" value="20">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🌈 Color Controls</h3>
+                    <div class="slider-container">
+                        <label for="contrastRange">
+                            <span>Contrast</span>
+                            <span class="slider-value" id="contrastValue">0</span>
+                        </label>
+                        <input type="range" id="contrastRange" class="range-input" min="0" max="200" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="brightnessRange">
+                            <span>Brightness</span>
+                            <span class="slider-value" id="brightnessValue">0</span>
+                        </label>
+                        <input type="range" id="brightnessRange" class="range-input" min="-100" max="100" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="hueRange">
+                            <span>Hue Shift</span>
+                            <span class="slider-value" id="hueValue">0°</span>
+                        </label>
+                        <input type="range" id="hueRange" class="range-input" min="0" max="360" value="0"
+                            style="width: 100%;">
+                    </div>
+                    <div class="slider-container">
+                        <label for="saturationRange">
+                            <span>Saturation</span>
+                            <span class="slider-value" id="saturationValue">100%</span>
+                        </label>
+                        <input type="range" id="saturationRange" class="range-input" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="color-picker-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="shouldRemoveColor">
+                            <span class="slider"></span>
+                        </label>
+                        <span>Remove Color:</span>
+                        <input type="color" id="colorRemover" class="color-input" value="#ffffff">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎨 Color Palette</h3>
+                    <div class="select-container">
+                        <select id="palette" class="select-input"></select>
+                    </div>
+
+                    <div class="selected-palette-display" id="selectedPaletteDisplay" style="display: none;">
+                        <div class="palette-colors-header">
+                            <h4>Current Palette Colors</h4>
+                        </div>
+                        <div class="color-grid" id="selectedColorGrid">
+                            <!-- Selected palette colors will be displayed here -->
+                        </div>
+                        <div class="palette-info">
+                            <small>Click on colors to copy hex values</small>
+                        </div>
+                    </div>
+
+                    <div class="slider-container">
+                        <label for="paletteBlend">
+                            <span>Palette Blend Strength</span>
+                            <span class="slider-value" id="paletteBlendValue">0%</span>
+                        </label>
+                        <input type="range" id="paletteBlend" class="range-input" min="0" max="1" value="0" step="0.01">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🎨 Extract Palette</h3>
+                    <div class="extract-controls">
+                        <div class="image-upload-section">
+                            <label for="paletteImageLoader" class="palette-file-input-label">
+                                📸 Choose Image for Palette
+                            </label>
+                            <input type="file" id="paletteImageLoader" accept="image/*" style="display: none;">
+
+                            <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+                                <img id="paletteImagePreview" class="palette-image-preview" alt="Palette source image">
+                                <div class="image-info">
+                                    <small id="imageInfoText">Ready for extraction</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slider-container">
+                            <label for="extractColorCount">
+                                <span>Colors to Extract</span>
+                                <span class="slider-value" id="extractColorCountValue">8</span>
+                            </label>
+                            <input type="range" id="extractColorCount" class="range-input" min="3" max="32" value="8">
+                        </div>
+
+                        <div class="select-container">
+                            <select id="extractMethod" class="select-input">
+                                <option value="kmeans">K-Means Clustering</option>
+                                <option value="median">Median Cut</option>
+                                <option value="dominant">Dominant Colors</option>
+                                <option value="lab">LAB Space Clustering</option>
+                                <option value="deltae">Delta E (Max Difference)</option>
+                            </select>
+                        </div>
+
+                        <button id="extractPalette" class="extract-button" disabled>
+                            <span class="extract-icon">🎨</span>
+                            Extract from Image
+                        </button>
+                    </div>
+
+                    <div class="extracted-palette" id="extractedPalette" style="display: none;">
+                        <div class="palette-header">
+                            <h4>Extracted Colors</h4>
+                            <div class="palette-actions">
+                                <button id="usePalette" class="action-btn use-btn">Use This Palette</button>
+                                <button id="savePalette" class="action-btn save-btn">Save Palette</button>
+                            </div>
+                        </div>
+                        <div class="color-grid" id="colorGrid">
+                            <!-- Colors will be populated here -->
+                        </div>
+                        <div class="palette-info">
+                            <small id="paletteInfo">Click on colors to copy hex values</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>💾 Save/Load Presets</h3>
+                    <div class="select-container">
+                        <select id="presetSelect" class="select-input">
+                            <option value="">Select a preset...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="presetName" placeholder="Enter preset name..."
+                            style="flex: 1; padding: 8px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 0.9rem;">
+                        <button id="savePreset"
+                            style="padding: 8px 15px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Save</button>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="loadPreset"
+                            style="flex: 1; padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Load</button>
+                        <button id="deletePreset"
+                            style="flex: 1; padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="controls-toggle">⚙️</button>
+
+            <div class="canvas-container">
+                <div class="zoom-controls" id="zoomControls" style="display: none;">
+                    <button id="zoomOut" class="zoom-btn">🔍-</button>
+                    <span id="zoomLevel" class="zoom-level">100%</span>
+                    <button id="zoomIn" class="zoom-btn">🔍+</button>
+                    <button id="zoomReset" class="zoom-btn">⚏</button>
+                    <button id="zoomFit" class="zoom-btn">📐</button>
+                </div>
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div id="canvasPlaceholder" class="canvas-placeholder">
+                        Select an image to start editing
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="pixelation-effects.js"></script>
+    <script src="palette-extraction.js"></script>
+</body>
+
+</html>
