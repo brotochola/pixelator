@@ -1,3 +1,32 @@
+/**
+ * PIXELATOR - Advanced Image Pixelation and Color Effects Tool
+ *
+ * This application transforms images with pixelation effects, color manipulation,
+ * and artistic filters. It provides a comprehensive suite of tools for creating
+ * retro-style pixel art from regular photographs or images.
+ *
+ * Main Features:
+ * - Pixelation with adjustable levels
+ * - Color palette application and extraction
+ * - Hue, saturation, brightness, and contrast adjustments
+ * - Border darkening effects for enhanced pixel definition
+ * - Surface smoothing for artistic blur effects
+ * - Color removal/replacement functionality
+ * - Preset saving and loading system
+ * - Zoom and pan functionality for detailed editing
+ *
+ * Technical Implementation:
+ * - Uses HTML5 Canvas for real-time image processing
+ * - Implements dual-canvas system for optimized rendering
+ * - Supports various color space conversions (RGB, HSL, LAB)
+ * - Includes multiple color extraction algorithms
+ *
+ * Author: Facundo Saiegh
+ * Purpose: To provide an easy-to-use tool for converting photos into pixel art
+ */
+
+// Pre-defined color palettes for artistic effects
+// These palettes are carefully curated to provide different artistic moods and styles
 const colorPalettes = [
   {
     name: "Forest Adventure",
@@ -281,7 +310,11 @@ let panStartY = 0;
 let panOffsetX = 0;
 let panOffsetY = 0;
 
-// Initialize
+/**
+ * Initialize the palette selection dropdown
+ * Populates the palette select element with all available color palettes
+ * This allows users to choose from predefined artistic color schemes
+ */
 function putPalettesInSelect() {
   let option = document.createElement("option");
   option.value = "none";
@@ -418,6 +451,16 @@ function handlePaletteChange() {
   applyEffects();
 }
 
+/**
+ * Main image processing function - applies all selected effects to the image
+ * This is the core function that transforms the original image based on user settings:
+ * - Pixelation: Creates blocky pixel art effect by downscaling and upscaling
+ * - Color adjustments: Contrast, brightness, hue, saturation
+ * - Smoothing: Blur effect for artistic touch
+ * - Color palette application: Maps colors to predefined palettes
+ * - Border darkening: Adds definition to pixel boundaries
+ * - Color removal: Removes or replaces specific colors
+ */
 function applyEffects() {
   console.log("re applying...");
   if (!img.src) return;

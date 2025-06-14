@@ -1,3 +1,25 @@
+/**
+ * PALETTE EXTRACTION MODULE
+ *
+ * This module implements advanced color palette extraction from images using
+ * multiple algorithms. It's designed to automatically extract the most
+ * representative colors from any image, creating custom palettes for artistic
+ * image processing.
+ *
+ * Algorithms Implemented:
+ * - K-Means Clustering: Groups similar colors using machine learning clustering
+ * - Median Cut: Divides color space recursively to find representative colors
+ * - Dominant Colors: Frequency-based extraction of most common colors
+ * - LAB Space Clustering: Perceptually uniform color space clustering
+ * - Delta E: Maximum color difference algorithm for distinct palette creation
+ *
+ * Why Multiple Algorithms?
+ * - Different images benefit from different extraction methods
+ * - Provides flexibility for various artistic styles
+ * - Allows experimentation with color theory approaches
+ * - Ensures optimal results across diverse image types
+ */
+
 // Palette extraction elements
 const paletteImageLoader = document.getElementById("paletteImageLoader");
 const paletteImagePreview = document.getElementById("paletteImagePreview");
@@ -76,12 +98,25 @@ extractPalette.addEventListener("click", function () {
   }, 100);
 });
 
+/**
+ * Main color extraction orchestrator
+ * Processes an image using the selected algorithm to extract a color palette
+ *
+ * Performance optimization: Scales down large images for faster processing
+ * without significantly affecting color analysis accuracy
+ *
+ * @param {Image} image - The source image for color extraction
+ * @param {number} colorCount - Number of colors to extract (3-32)
+ * @param {string} method - Algorithm to use for extraction
+ * @returns {Array} Array of RGB color objects
+ */
 function extractColorsFromImage(image, colorCount, method) {
   // Create a temporary canvas to analyze the image
   const tempCanvas = document.createElement("canvas");
   const tempCtx = tempCanvas.getContext("2d");
 
   // Scale down image for faster processing
+  // This optimization reduces computation time without affecting color accuracy
   const maxSize = 200;
   const scale = Math.min(maxSize / image.width, maxSize / image.height);
   tempCanvas.width = Math.floor(image.width * scale);
